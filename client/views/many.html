@@ -1,6 +1,33 @@
+<button type="button" class="btn btn-default" ng-click="showTaskForm = !showTaskForm">Add a New Task</button>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    Basic panel example
+<form ng-show="showTaskForm" name="newTask">
+
+  <div class="form-group" ng-class="{'has-error' : newTask.task.$invalid && !newTask.task.$pristine,'has-success' : newTask.task.$valid }">
+    <label class="control-label" for="task">Task:</label>
+    <input type="text" name="task" class="form-control" ng-model="task.task" ng-minlength="2" ng-maxlength="200" ng-required="true" placeholder="Task">
+    <small ng-show="newTask.task.$error.minlength" class="help-block">Task is too short.</small>
+    <small ng-show="newTask.task.$error.maxlength" class="help-block">Task is too long.</small>
+  </div>
+
+  <div class="form-group" ng-class="{'has-error' : newTask.status.$invalid && !newTask.status.$pristine,'has-success' : newTask.status.$valid }">
+    <label class="control-label" for="status">Status:</label>
+    <input type="text" name="status" class="form-control" ng-model="task.status" ng-minlength="2" ng-maxlength="20" ng-required="true" placeholder="Status">
+    <small ng-show="newTask.status.$error.minlength" class="help-block">Status is too short.</small>
+    <small ng-show="newTask.status.$error.maxlength" class="help-block">Status is too long.</small>
+  </div>
+
+  <button class="btn btn-default" ng-disabled="newTask.$invalid" ng-click="showTaskForm=false; submitTask(newTask.$valid)">Submit</button>
+</form>
+
+<div ng-repeat="task in tasks">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div>
+        Task: <a href="#/{{task.id}}" >{{task.task}}</a>
+      </div>
+      <div>
+        Status: {{task.status}}
+      </div>
+    </div>
   </div>
 </div>

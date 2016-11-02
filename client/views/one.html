@@ -1,0 +1,34 @@
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div>
+        Task: {{task.task}}
+      </div>
+      <div>
+        Status: {{task.status}}
+      </div>
+      <div class="pull-right">
+        <button type="button" class="btn btn-default" ng-click="showEditForm = !showEditForm">Edit</button>
+        <button type="button" class="btn btn-default" ng-click="delete(task)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <form ng-show="showEditForm" name="editTask">
+
+    <div class="form-group" ng-class="{'has-error' : editTask.task.$invalid && !editTask.task.$pristine,'has-success' : editTask.task.$valid }">
+      <label class="control-label" for="task">Task:</label>
+      <input type="text" name="task" class="form-control" ng-model="task.task" ng-minlength="2" ng-maxlength="200" ng-required="true" placeholder="Task">
+      <small ng-show="editTask.task.$error.minlength" class="help-block">Task is too short.</small>
+      <small ng-show="editTask.task.$error.maxlength" class="help-block">Task is too long.</small>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error' : editTask.status.$invalid && !editTask.status.$pristine,'has-success' : editTask.status.$valid }">
+      <label class="control-label" for="status">Status:</label>
+      <input type="text" name="status" class="form-control" ng-model="task.status" ng-minlength="2" ng-maxlength="20" ng-required="true" placeholder="Status">
+      <small ng-show="editTask.status.$error.minlength" class="help-block">Status is too short.</small>
+      <small ng-show="editTask.status.$error.maxlength" class="help-block">Status is too long.</small>
+    </div>
+
+    <button class="btn btn-default" ng-disabled="editTask.$invalid" ng-click="showEditForm=false; submitEdit(editTask.$valid)">Submit</button>
+  </form>
